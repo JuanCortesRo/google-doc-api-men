@@ -130,15 +130,21 @@ app.post('/execute', async (req, res) => {
     if (!data) {
       return res.status(400).json({ error: 'No se recibió ningún dato' });
     }
-    const result = await execute(data);
-    res.status(200).json(result);
+
+        // Simple trace log for incoming generation payloads.
+        console.log('[execute] Payload recibido:', JSON.stringify(data, null, 2));
+
+        const result = await execute(data);
+
+        console.log('[execute] Resultado:', JSON.stringify(result, null, 2));
+        res.status(200).json(result);
 });
 
 app.get('/', (req, res) => {
     res.status(200).json({ "server": "okey"});
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
 });
